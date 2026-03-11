@@ -1,17 +1,25 @@
-import { StyleSheet, Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Text, View } from "react-native";
+// import { useApi } from "@/context/AuthProvider";
 
 export default function RecuperarSenhaScreen() {
+
+    // const { getHello } = useApi();
+    // const [resultado, setResultado] = useState("");
+
+    // useEffect(() => {
+    //     async function carregar() {
+    //         const data = await getHello();
+    //         setResultado(data);
+    //     }
+
+    //     carregar();
+    // }, []);
+
     return (
-        <View style={styles.container}>
-            <Text>RecuperarSenha Screen</Text>
+        <View>
+            <Text>Testando conexão com API...</Text>
+            {/* <Text>{resultado}</Text> */}
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-});

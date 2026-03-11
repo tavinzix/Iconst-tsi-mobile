@@ -1,45 +1,41 @@
-
-import React, { createContext } from "react";
-
+import api from "@/services/api";
+import React, { createContext, useContext } from "react";
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }: any) => {
-    // async function signIn(email: string, senha: string) {
-    //     // const auth = getAuth();
-    //     try {
-    //         await signInWithEmailAndPassword(auth, email, senha);
-    //         return "ok";
-    //     } catch (error: any) {
-    //         console.error(error.code, error.message);
-    //         return launchServerMessageErro(error);
-    //     }
-    // }
 
-    // //função utilitária
-    // function launchServerMessageErro(e: any): string {
-    //     switch (e.code) {
-    //         case "auth/invalid-credential":
-    //             return "Email inexistente ou senha errada.";
-    //         case "auth/user-not-found":
-    //             return "Usuário não cadastrado.";
-    //         case "auth/wrong-password":
-    //             return "Erro na senha.";
-    //         case "auth/invalid-email":
-    //             return "Email inexistente.";
-    //         case "auth/user-disabled":
-    //             return "Usuário desabilitado.";
-    //         case "auth/email-already-in-use":
-    //             return "Email em uso. Tente outro email.";
-    //         default:
-    //             return "Erro desconhecido. Contate o administrador";
-    //     }
-    // }
+    const login = async (dados: any) => {
+        try {
+            const { data } = await api.post("/login", dados);
+            return {
+                sucesso: true,
+                user: data.user,
+                token: data.token.value
+            };
+
+        } catch (err: any) {
+            console.log("ERRO LOGIN:", err.response?.data);
+
+            return {
+                sucesso: false,
+                mensagem: err.response?.data?.message || "Erro ao fazer login"
+            };
+        }
+    };
+
+    const logout = () => {
+        // setUser(null);
+        // setImagemUsuario(null)
+    };
 
     return (
-        <AuthContext.Provider 
-        value={{  }}>
+        <AuthContext.Provider
+            value={{
+                login,
+                logout
+            }}>
             {children}
-                </AuthContext.Provider>
+        </AuthContext.Provider>
     );
 };

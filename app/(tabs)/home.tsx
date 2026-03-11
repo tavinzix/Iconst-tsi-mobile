@@ -5,6 +5,7 @@ export default function Home() {
     return (
     <SafeAreaView style={styles.container}>
         <Text>Home</Text>
+        <Text>Home</Text>
     </SafeAreaView>
     )
 }

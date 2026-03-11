@@ -1,24 +1,11 @@
-import {AuthContext} from "@/context/AuthProvider"
+import { AuthContext } from "@/context/AuthProvider"
 import { yupResolver } from "@hookform/resolvers/yup";
 import { router } from "expo-router";
 import { useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import {
-    Image,
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    View,
-} from "react-native";
-import {
-    Button,
-    Dialog,
-    Divider,
-    Text,
-    TextInput,
-    useTheme,
-} from "react-native-paper";
-import * as yup from "yup";
+import { Image, SafeAreaView, ScrollView, StyleSheet, View, } from "react-native";
+import { Button, Dialog, Divider, Text, TextInput, useTheme, } from "react-native-paper";
+import tema from "@/utils/tema"
 
 const requiredMessage = "Campo obrigatório";
 
@@ -31,26 +18,10 @@ const requiredMessage = "Campo obrigatório";
   [0-9a-zA-Z$*&@#]{8,}  // deve conter ao menos 8 dos caracteres mencionados
 $/
 */
-const schema = yup
-    .object()
-    .shape({
-        email: yup
-            .string()
-            .required(requiredMessage)
-            .matches(/\S+@\S+\.\S+/, "Email inválido"),
-        senha: yup
-            .string()
-            .required(requiredMessage)
-            .matches(
-                /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/,
-                "A senha deve conter ao menos uma letra maiúscula, uma letra minúscula, um númeral, um caractere especial e um total de 8 caracteres"
-            ),
-    })
-    .required();
 
 export default function Entrar() {
     const theme = useTheme();
-    const { signIn } = useContext<any>(AuthContext);
+    const { login } = useContext<any>(AuthContext);
     const [exibirSenha, setExibirSenha] = useState(true);
     const [logando, setLogando] = useState(false);
     const [dialogVisivel, setDialogVisivel] = useState(false);
@@ -58,33 +29,30 @@ export default function Entrar() {
     const {
         control,
         handleSubmit,
-        formState: { errors },
     } = useForm<any>({
         defaultValues: {
-            email: "",
+            cpf: "",
             senha: "",
         },
-        mode: "onSubmit",
-        resolver: yupResolver(schema),
+        mode: "onSubmit"
     });
 
-    async function entrar() {
+    async function entrar(data: any) {
         setLogando(true);
-        const response = await signIn();
-        if (response === "ok") {
+        const response = await login(data);
+
+        if (response.sucesso) {
             setLogando(false);
             router.replace("/(tabs)/home");
         } else {
-            setMensagemDialog(response);
+            setMensagemDialog(response.mensagem);
             setDialogVisivel(true);
             setLogando(false);
         }
     }
 
     return (
-        <SafeAreaView
-            style={{ ...styles.container, backgroundColor: theme.colors.background }}
-        >
+        <SafeAreaView style={{ ...styles.container, backgroundColor: theme.colors.background }} >
             <ScrollView>
                 <>
                     <Image
@@ -96,25 +64,18 @@ export default function Entrar() {
                         render={({ field: { onChange, onBlur, value } }) => (
                             <TextInput
                                 style={styles.textinput}
-                                label="Email"
-                                placeholder="Digite seu email"
+                                label="CPF"
+                                placeholder="Digite seu cpf"
                                 mode="outlined"
                                 autoCapitalize="none"
                                 returnKeyType="next"
-                                keyboardType="email-address"
                                 onBlur={onBlur}
                                 onChangeText={onChange}
                                 value={value}
-                                right={<TextInput.Icon icon="email" />}
                             />
                         )}
-                        name="email"
+                        name="cpf"
                     />
-                    {errors.email && (
-                        <Text style={{ ...styles.textError, color: theme.colors.error }}>
-                            {errors.email?.message?.toString()}
-                        </Text>
-                    )}
                     <Controller
                         control={control}
                         rules={{
@@ -147,11 +108,7 @@ export default function Entrar() {
                         )}
                         name="senha"
                     />
-                    {errors.senha && (
-                        <Text style={{ ...styles.textError, color: theme.colors.error }}>
-                            {errors.senha?.message?.toString()}
-                        </Text>
-                    )}
+
                     <Text
                         style={{
                             ...styles.textEsqueceuSenha,
@@ -204,12 +161,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     image: {
-        width: 200,
-        height: 200,
-        alignSelf: "center",
-        borderRadius: 200 / 2,
+        width: 350,
+        height: 100,
         marginTop: 100,
         marginBottom: 40,
+        objectFit: "fill"
     },
     textinput: {
         width: 350,
@@ -220,6 +176,7 @@ const styles = StyleSheet.create({
     button: {
         marginTop: 50,
         marginBottom: 30,
+        backgroundColor: tema.colors.primary
     },
     textDialog: {
         textAlign: "center",
