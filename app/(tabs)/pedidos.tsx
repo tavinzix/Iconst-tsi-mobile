@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function Pagina2() {
     return (
     <SafeAreaView style={styles.container}>
-        <Text>Pagina2</Text>
+        <Text>Pedidos</Text>
     </SafeAreaView>
     )
 }

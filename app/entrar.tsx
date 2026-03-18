@@ -118,7 +118,7 @@ export default function Entrar() {
                                 color: theme.colors.tertiary,
                             }}
                             variant="labelMedium"
-                            onPress={() => router.push("/recuperarSenha")}
+                            onPress={() => router.push("/(tabs)/home")}
                         >
                             Esqueceu sua senha?
                         </Text>
@@ -137,7 +137,7 @@ export default function Entrar() {
                             <Text
                                 style={{ ...styles.textCadastro, color: theme.colors.tertiary }}
                                 variant="labelMedium"
-                                onPress={() => router.push("/pagina2")}
+                                onPress={() => router.push("/cadastrarUsuario")}
                             >
                                 {" "}
                                 Cadastre-se.
