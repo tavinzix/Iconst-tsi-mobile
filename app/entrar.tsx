@@ -5,8 +5,8 @@ import { useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Image, SafeAreaView, ScrollView, StyleSheet, View, } from "react-native";
 import { Button, Dialog, Divider, Text, TextInput, useTheme, } from "react-native-paper";
+import { StatusBar } from 'expo-status-bar';
 import tema from "@/utils/tema"
-
 const requiredMessage = "Campo obrigatório";
 
 /*
@@ -40,7 +40,7 @@ export default function Entrar() {
     async function entrar(data: any) {
         setLogando(true);
         const response = await login(data);
-
+        console.log(response)
         if (response.sucesso) {
             setLogando(false);
             router.replace("/(tabs)/home");
@@ -52,106 +52,110 @@ export default function Entrar() {
     }
 
     return (
-        <SafeAreaView style={{ ...styles.container, backgroundColor: theme.colors.background }} >
-            <ScrollView>
-                <>
-                    <Image
-                        style={styles.image}
-                        source={require("../assets/images/logo.png")}
-                    />
-                    <Controller
-                        control={control}
-                        render={({ field: { onChange, onBlur, value } }) => (
-                            <TextInput
-                                style={styles.textinput}
-                                label="CPF"
-                                placeholder="Digite seu cpf"
-                                mode="outlined"
-                                autoCapitalize="none"
-                                returnKeyType="next"
-                                onBlur={onBlur}
-                                onChangeText={onChange}
-                                value={value}
-                            />
-                        )}
-                        name="cpf"
-                    />
-                    <Controller
-                        control={control}
-                        rules={{
-                            required: true,
-                        }}
-                        render={({ field: { onChange, onBlur, value } }) => (
-                            <TextInput
-                                style={styles.textinput}
-                                label="Senha"
-                                placeholder="Digite sua senha"
-                                mode="outlined"
-                                autoCapitalize="none"
-                                returnKeyType="go"
-                                secureTextEntry={exibirSenha}
-                                onBlur={onBlur}
-                                onChangeText={onChange}
-                                value={value}
-                                right={
-                                    <TextInput.Icon
-                                        icon="eye"
-                                        color={
-                                            exibirSenha
-                                                ? theme.colors.onBackground
-                                                : theme.colors.error
-                                        }
-                                        onPress={() => setExibirSenha((previus) => !previus)}
-                                    />
-                                }
-                            />
-                        )}
-                        name="senha"
-                    />
+        <>
+            <StatusBar style="dark" />
 
-                    <Text
-                        style={{
-                            ...styles.textEsqueceuSenha,
-                            color: theme.colors.tertiary,
-                        }}
-                        variant="labelMedium"
-                        onPress={() => router.push("/recuperarSenha")}
-                    >
-                        Esqueceu sua senha?
-                    </Text>
-                    <Button
-                        style={styles.button}
-                        mode="contained"
-                        onPress={handleSubmit(entrar)}
-                        loading={logando}
-                        disabled={logando}
-                    >
-                        {!logando ? "Entrar" : "Entrando"}
-                    </Button>
-                    <Divider />
-                    <View style={styles.divCadastro}>
-                        <Text variant="labelMedium">Não tem uma conta?</Text>
+            <SafeAreaView style={{ ...styles.container, backgroundColor: theme.colors.background }} >
+                <ScrollView>
+                    <>
+                        <Image
+                            style={styles.image}
+                            source={require("../assets/images/logo.png")}
+                        />
+                        <Controller
+                            control={control}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <TextInput
+                                    style={styles.textinput}
+                                    label="CPF"
+                                    placeholder="Digite seu cpf"
+                                    mode="outlined"
+                                    autoCapitalize="none"
+                                    returnKeyType="next"
+                                    onBlur={onBlur}
+                                    onChangeText={onChange}
+                                    value={value}
+                                />
+                            )}
+                            name="cpf"
+                        />
+                        <Controller
+                            control={control}
+                            rules={{
+                                required: true,
+                            }}
+                            render={({ field: { onChange, onBlur, value } }) => (
+                                <TextInput
+                                    style={styles.textinput}
+                                    label="Senha"
+                                    placeholder="Digite sua senha"
+                                    mode="outlined"
+                                    autoCapitalize="none"
+                                    returnKeyType="go"
+                                    secureTextEntry={exibirSenha}
+                                    onBlur={onBlur}
+                                    onChangeText={onChange}
+                                    value={value}
+                                    right={
+                                        <TextInput.Icon
+                                            icon="eye"
+                                            color={
+                                                exibirSenha
+                                                    ? theme.colors.onBackground
+                                                    : theme.colors.error
+                                            }
+                                            onPress={() => setExibirSenha((previus) => !previus)}
+                                        />
+                                    }
+                                />
+                            )}
+                            name="senha"
+                        />
+
                         <Text
-                            style={{ ...styles.textCadastro, color: theme.colors.tertiary }}
+                            style={{
+                                ...styles.textEsqueceuSenha,
+                                color: theme.colors.tertiary,
+                            }}
                             variant="labelMedium"
-                            onPress={() => router.push("/pagina2")}
+                            onPress={() => router.push("/recuperarSenha")}
                         >
-                            {" "}
-                            Cadastre-se.
+                            Esqueceu sua senha?
                         </Text>
-                    </View>
-                </>
-            </ScrollView>
-            <Dialog visible={dialogVisivel} onDismiss={() => setDialogVisivel(false)}>
-                <Dialog.Icon icon="alert-circle-outline" size={60} />
-                <Dialog.Title style={styles.textDialog}>Erro</Dialog.Title>
-                <Dialog.Content>
-                    <Text style={styles.textDialog} variant="bodyLarge">
-                        {mensagemDialog}
-                    </Text>
-                </Dialog.Content>
-            </Dialog>
-        </SafeAreaView>
+                        <Button
+                            style={styles.button}
+                            mode="contained"
+                            onPress={handleSubmit(entrar)}
+                            loading={logando}
+                            disabled={logando}
+                        >
+                            {!logando ? "Entrar" : "Entrando"}
+                        </Button>
+                        <Divider />
+                        <View style={styles.divCadastro}>
+                            <Text variant="labelMedium">Não tem uma conta?</Text>
+                            <Text
+                                style={{ ...styles.textCadastro, color: theme.colors.tertiary }}
+                                variant="labelMedium"
+                                onPress={() => router.push("/pagina2")}
+                            >
+                                {" "}
+                                Cadastre-se.
+                            </Text>
+                        </View>
+                    </>
+                </ScrollView>
+                <Dialog visible={dialogVisivel} onDismiss={() => setDialogVisivel(false)}>
+                    <Dialog.Icon icon="alert-circle-outline" size={60} />
+                    <Dialog.Title style={styles.textDialog}>Erro</Dialog.Title>
+                    <Dialog.Content>
+                        <Text style={styles.textDialog} variant="bodyLarge">
+                            {mensagemDialog}
+                        </Text>
+                    </Dialog.Content>
+                </Dialog>
+            </SafeAreaView>
+        </>
     );
 }
 
