@@ -21,17 +21,12 @@ export default function Home() {
         <Text>Home</Text>
 
             <Button
-                // style={styles.button}
-                // mode="contained"
-                // onPress={handleSubmit(entrar)}
-                // loading={logando}
-                // disabled={logando}
+                mode="contained"
                 onPress={sair}
             >
-                SAir
+                Sair
             </Button>
 
-        <Text>Home</Text>
     </SafeAreaView>
     )
 }
