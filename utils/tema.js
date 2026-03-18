@@ -8,6 +8,8 @@ export default {
         danger: "#FB3640", //#FF4A1C
         light: "#D9EAFA", //"#CEE7E6",
         placeholder: "#A4A4A4",
+        white: "#FFFFFF",
+        black: "#000000",
     },
     fonts: {
         primary: "Roboto",
