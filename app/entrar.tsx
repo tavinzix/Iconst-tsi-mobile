@@ -3,11 +3,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { router } from "expo-router";
 import { useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Image, SafeAreaView, ScrollView, StyleSheet, View, } from "react-native";
+import { Image, ScrollView, StyleSheet, useColorScheme, View, } from "react-native";
 import { Button, Dialog, Divider, Text, TextInput, useTheme, } from "react-native-paper";
-import { StatusBar } from 'expo-status-bar';
 import tema from "@/utils/tema"
 const requiredMessage = "Campo obrigatório";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 /*
   /^
@@ -26,10 +26,7 @@ export default function Entrar() {
     const [logando, setLogando] = useState(false);
     const [dialogVisivel, setDialogVisivel] = useState(false);
     const [mensagemDialog, setMensagemDialog] = useState("");
-    const {
-        control,
-        handleSubmit,
-    } = useForm<any>({
+    const { control, handleSubmit, } = useForm<any>({
         defaultValues: {
             cpf: "",
             senha: "",
@@ -53,11 +50,8 @@ export default function Entrar() {
 
     return (
         <>
-            <StatusBar style="dark" />
-
             <SafeAreaView style={{ ...styles.container, backgroundColor: theme.colors.background }} >
                 <ScrollView>
-                    <>
                         <Image
                             style={styles.image}
                             source={require("../assets/images/logo.png")}
@@ -143,7 +137,6 @@ export default function Entrar() {
                                 Cadastre-se.
                             </Text>
                         </View>
-                    </>
                 </ScrollView>
                 <Dialog visible={dialogVisivel} onDismiss={() => setDialogVisivel(false)}>
                     <Dialog.Icon icon="alert-circle-outline" size={60} />
