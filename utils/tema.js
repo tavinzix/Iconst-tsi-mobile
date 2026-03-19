@@ -13,7 +13,7 @@ export default {
     },
     fonts: {
         primary: "Roboto",
-        secondary: "Roboto"
+        secondary: "Arial"
     },
     fontSizes: {
         small: 12,
@@ -22,3 +22,6 @@ export default {
         extraLarge: 36,
     },
 }
+
+//icones: https://oblador.github.io/react-native-vector-icons/
+// https://pictogrammers.com/library/mdi/
