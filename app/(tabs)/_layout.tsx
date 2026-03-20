@@ -4,7 +4,10 @@ import tema from "@/utils/tema";
 
 export default function TabsLayout() {
     return (
-        <Tabs initialRouteName='home'>
+        <Tabs initialRouteName='home'
+            screenOptions={{
+                headerShown: false,
+            }}>
             <Tabs.Screen name="home" options={{
                 title: "Home",
                 tabBarIcon: ({ color }) => (
