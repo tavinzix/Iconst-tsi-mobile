@@ -14,7 +14,7 @@ const requiredMessage = "Campo obrigatório";
 const schema = yup.object().shape({
     nome: yup.string().required(requiredMessage),
     email: yup.string().required(requiredMessage).email("Email inválido"),
-    cpf: yup.string().required(requiredMessage).matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "CPF inválido"),
+    cpf: yup.string().required(requiredMessage).matches(/^\d{11}$/, "CPF inválido"),
     dtNasc: yup.string().required(requiredMessage),
     telefone: yup.string().required(requiredMessage),
     senha: yup.string().required(requiredMessage)
@@ -173,7 +173,7 @@ export default function CadastrarUsuario() {
                                         onChangeText={(text) => {
                                             const { formatado, numeros } = formatarCPF(text);
                                             setCpfFormatado(formatado);
-                                            onChange(formatado);
+                                            onChange(numeros);
                                         }}
                                         maxLength={14}
                                     />
@@ -316,9 +316,8 @@ export default function CadastrarUsuario() {
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
         flex: 1,
-        alignItems: "center",
+        padding:30
     },
     formContainer: {
         width: "100%",
