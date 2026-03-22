@@ -38,7 +38,6 @@ export default function Entrar() {
     async function entrar(data: any) {
         setLogando(true);
         const response = await login(data);
-        console.log(response)
         if (response.sucesso) {
             setLogando(false);
             router.replace("/(tabs)/home");
@@ -109,7 +108,6 @@ export default function Entrar() {
                                 }
                             />
                         )}
-
                     />
                     {errors.senha && (
                         <Text style={{ ...styles.textError, color: theme.colors.error }}>

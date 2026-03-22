@@ -11,10 +11,8 @@ export const AuthProvider = ({ children }: any) => {
     const login = async (dados: any) => {
         try {
             const { data } = await api.post("/login", dados);
-            console.log(data.user)
             setUser(data.user);
-            // const img = !data.imgUser || data.imgUser === 'avatar.jpg' ? null : data.imgUser;
-            // setImagemUsuario(img);
+            setImagemUsuario(data.user.imgUser);
 
             await SecureStore.setItemAsync("token", data.token.value);
 
