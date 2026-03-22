@@ -1,12 +1,12 @@
 import { AuthContext } from "@/context/AuthProvider";
 import { router } from "expo-router";
 import { useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { Button } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
-    const {logout, user} = useContext<any>(AuthContext)
+    const {logout} = useContext<any>(AuthContext)
 
     async function sair(){
         const resultado = await logout();

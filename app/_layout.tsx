@@ -49,7 +49,7 @@ export default function RootLayout() {
                     </Stack>
                 </UserProvider>
             </AuthProvider>
-        // </PaperProvider>
+        </PaperProvider>
     );
 }
 

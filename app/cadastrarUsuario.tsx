@@ -298,8 +298,8 @@ export default function CadastrarUsuario() {
                             </Button>
                         </View>
                     </ScrollView>
-
                 </KeyboardAvoidingView>
+                
                 <Dialog visible={dialogVisivel} onDismiss={() => setDialogVisivel(false)}>
                     <Dialog.Icon icon="alert-circle-outline" size={60} />
                     <Dialog.Title style={styles.textDialog}>Erro</Dialog.Title>
