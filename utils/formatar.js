@@ -26,6 +26,12 @@ const formatarTelefone = (valor) => {
 };
 
 const formatarData = (valor) => {
+    if (!valor) return { formatado: '', numeros: '' };
+
+    if (valor.includes('T')) {
+        valor = valor.split('T')[0].split('-').reverse().join('');
+    }
+
     const numeros = valor.replace(/\D/g, '').slice(0, 8);
     const formatado = numeros
         .replace(/(\d{2})(\d)/, '$1/$2')
