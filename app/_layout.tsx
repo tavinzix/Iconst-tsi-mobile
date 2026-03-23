@@ -46,6 +46,7 @@ export default function RootLayout() {
                         <Stack.Screen name="(tabs)" />
                         <Stack.Screen name="entrar" />
                         <Stack.Screen name="cadastrarUsuario" />
+                        <Stack.Screen name="editarPerfilUsuario" />
                     </Stack>
                 </UserProvider>
             </AuthProvider>
