@@ -53,6 +53,7 @@ export const AuthProvider = ({ children }: any) => {
     const logout = async () => {
         await api.post("/logout")
         await SecureStore.deleteItemAsync("token");
+        await SecureStore.deleteItemAsync("credencial");
         setUser(null);
         return { sucesso: true }
     };
