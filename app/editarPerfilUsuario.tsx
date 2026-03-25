@@ -29,7 +29,7 @@ export default function EditarPerfilUsuario() {
     const { userInfo, loadingUser, editarUsuario } = useContext<any>(UserContext);
     const { user, imagemUsuario } = useContext<any>(AuthContext)
     const theme = useTheme();
-    
+
     const [cpfFormatado, setCpfFormatado] = useState('');
     const [telefoneFormatado, setTelefoneFormatado] = useState('');
     const [dtNascFormatada, setDtNascFormatada] = useState('');
