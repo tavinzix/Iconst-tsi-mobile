@@ -74,20 +74,20 @@ export const UserProvider = ({ children }: any) => {
                  mensagem: err.response?.data?.message || err.message,
              };
          }
-     }
+     }*/
   
      async function removerConta() {
          try {
-             await axiosClient.patch('/usuario/delete/conta');
+             await api.patch('/usuario/delete/conta');
   
              return { sucesso: true };
-         } catch (err) {
+         } catch (err: any) {
              return {
                  sucesso: false,
                  mensagem: err.response?.data?.message || err.message,
              };
          }
-     }*/
+     }
 
     useEffect(() => {
         buscarUsuario();
@@ -101,7 +101,7 @@ export const UserProvider = ({ children }: any) => {
                 criarUsuario,
                 editarUsuario,
                 // removerFoto,
-                // removerConta,
+                removerConta,
                 buscarUsuario,
                 setUserInfo,
             }}>

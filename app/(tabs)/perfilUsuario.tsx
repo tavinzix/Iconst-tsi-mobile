@@ -8,13 +8,42 @@ import { UserContext } from "@/context/UserProvider";
 
 export default function PerfilUsuario() {
     const { user, imagemUsuario } = useContext<any>(AuthContext)
-    const { userInfo, loadingUser } = useContext<any>(UserContext);
+    const { logout } = useContext<any>(AuthContext)
+
+
+    const { userInfo, loadingUser, removerConta } = useContext<any>(UserContext);
     const theme = useTheme();
     const [dialogVisivel, setDialogVisivel] = useState(false);
     const [mensagemDialog, setMensagemDialog] = useState("");
 
-    async function editaPerfil(formData: any) {
-        router.navigate("/editarPerfilUsuario");
+
+    async function sair() {
+        const resultado = await logout();
+        if (resultado.sucesso) {
+            router.replace('/entrar')
+        } else {
+        }
+    }
+
+
+    async function deletaPerfil() {
+        // if(!confirm("Tem certeza que deseja deletar sua conta? Esta ação é irreversível!")) return;
+
+        try {
+            const resposta = await removerConta(user.id);
+            if (resposta.sucesso) {
+                setMensagemDialog("Conta removida com sucesso!");
+                setDialogVisivel(true);
+                router.navigate("/entrar");
+            } else {
+                setMensagemDialog(resposta.mensagem || "Erro ao remover conta");
+                setDialogVisivel(true);
+            }
+        } catch (err: any) {
+            setMensagemDialog(err.message || "Erro ao remover conta");
+            setDialogVisivel(true);
+        }
+
     }
 
     useEffect(() => {
@@ -43,10 +72,17 @@ export default function PerfilUsuario() {
                         <Text>CPF: {userInfo?.cpf}</Text>
                         <Text>Email: {userInfo?.email}</Text>
                         <Text>Telefone: {userInfo?.telefone}</Text>
-                        <Button mode="contained" onPress={editaPerfil} >
+                        <Button mode="contained" onPress={() => { router.navigate("/editarPerfilUsuario"); }} >
                             Editar perfil
                         </Button>
 
+                        <Button style={{ marginTop: 20, backgroundColor: '#ff4747' }} mode="contained" onPress={deletaPerfil} >
+                            Remover conta
+                        </Button>
+
+                        <Button mode="contained" onPress={sair}>
+                            Sair
+                        </Button>
                     </>
                 </ScrollView>
             </KeyboardAvoidingView>
