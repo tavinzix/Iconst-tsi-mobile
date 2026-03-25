@@ -8,6 +8,26 @@ export const AuthProvider = ({ children }: any) => {
     const [user, setUser] = useState(null);
     const [imagemUsuario, setImagemUsuario] = useState(null);
 
+
+    async function armazenaCredencialnaCache(dados: any) {
+        try {
+            await SecureStore.setItem("credencial", JSON.stringify(dados));
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    async function recuperaCredencialnaCache(): Promise<null | string> {
+        try {
+            const credencial = await SecureStore.getItem("credencial");
+            return credencial ? JSON.parse(credencial) : null;
+        } catch (e) {
+            console.error("AuthProvider, recuperaCredencialdaCache: " + e);
+            return null;
+        }
+    }
+
+
     const login = async (dados: any) => {
         try {
             const { data } = await api.post("/login", dados);
@@ -15,7 +35,7 @@ export const AuthProvider = ({ children }: any) => {
             setImagemUsuario(data.user.imgUser);
 
             await SecureStore.setItemAsync("token", data.token.value);
-
+            armazenaCredencialnaCache(dados)
             return {
                 sucesso: true,
                 user: data.user,
@@ -44,7 +64,8 @@ export const AuthProvider = ({ children }: any) => {
                 logout,
                 user,
                 imagemUsuario,
-                setImagemUsuario
+                setImagemUsuario,
+                recuperaCredencialnaCache
             }}>
             {children}
         </AuthContext.Provider>

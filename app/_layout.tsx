@@ -39,7 +39,7 @@ export default function RootLayout() {
                 <UserProvider>
                     <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
 
-                    <Stack initialRouteName='entrar'
+                    <Stack initialRouteName='index'
                         screenOptions={{
                             headerShown: false,
                         }}>
