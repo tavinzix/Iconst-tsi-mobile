@@ -36,6 +36,7 @@ export default function CadastrarUsuario() {
     const [loading, setLoading] = useState(false);
     const [dialogVisivel, setDialogVisivel] = useState(false);
     const [mensagemDialog, setMensagemDialog] = useState("");
+    const [exibirSenha, setExibirSenha] = useState(true);
 
     const { control, handleSubmit, formState: { errors } } = useForm<any>({
         defaultValues: {
@@ -252,14 +253,26 @@ export default function CadastrarUsuario() {
                                     <TextInput
                                         style={styles.textinput}
                                         label="Senha"
-                                        placeholder="Mínimo 8 caracteres"
-                                        left={<TextInput.Icon icon="lock" />}
+                                        placeholder="Digite sua senha"
                                         mode="outlined"
                                         autoCapitalize="none"
                                         returnKeyType="next"
+                                        secureTextEntry={exibirSenha}
                                         onBlur={onBlur}
                                         onChangeText={onChange}
                                         value={value}
+                                        left={<TextInput.Icon icon="lock" />}
+                                        right={
+                                            <TextInput.Icon
+                                                icon={exibirSenha ? "eye" : "eye-off"}
+                                                color={
+                                                    exibirSenha
+                                                        ? theme.colors.onBackground
+                                                        : theme.colors.primary
+                                                }
+                                                onPress={() => setExibirSenha((previus) => !previus)}
+                                            />
+                                        }
                                     />
                                 )}
                             />
@@ -277,13 +290,25 @@ export default function CadastrarUsuario() {
                                         style={styles.textinput}
                                         label="Confirmar senha"
                                         placeholder="Digite novamente"
-                                        left={<TextInput.Icon icon="lock" />}
                                         mode="outlined"
                                         autoCapitalize="none"
                                         returnKeyType="next"
+                                        secureTextEntry={exibirSenha}
                                         onBlur={onBlur}
                                         onChangeText={onChange}
                                         value={value}
+                                        left={<TextInput.Icon icon="lock" />}
+                                        right={
+                                            <TextInput.Icon
+                                                icon={exibirSenha ? "eye" : "eye-off"}
+                                                color={
+                                                    exibirSenha
+                                                        ? theme.colors.onBackground
+                                                        : theme.colors.primary
+                                                }
+                                                onPress={() => setExibirSenha((previus) => !previus)}
+                                            />
+                                        }
                                     />
                                 )}
                             />
