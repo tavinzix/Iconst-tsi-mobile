@@ -10,7 +10,7 @@ import tema from "@/utils/tema";
 
 export default function PerfilUsuario() {
     const { user, imagemUsuario, logout } = useContext<any>(AuthContext);
-    const { userInfo, loadingUser, removerConta } = useContext<any>(UserContext);
+    const { userInfo, loadingUser, removerConta, buscarUsuario } = useContext<any>(UserContext);
 
     const [dialogVisivel, setDialogVisivel] = useState(false);
     const [mensagemDialog, setMensagemDialog] = useState("");
@@ -22,6 +22,10 @@ export default function PerfilUsuario() {
             router.navigate("/entrar");
         }
     }, [user]);
+    
+    useEffect(() => {
+        buscarUsuario();
+    }, []);
 
     if (loadingUser) {
         return (
@@ -82,7 +86,7 @@ export default function PerfilUsuario() {
 
             <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollConteudo} >
                 <View style={{ ...styles.dadosUsuario }}>
-                    <Image style={styles.imagemUsuario} source={{ uri: imagemUsuario }} />
+                    <Image style={styles.imagemUsuario} source={{ uri: userInfo?.imgUser || imagemUsuario }} />
                     <Text style={styles.usuarioNome}>{userInfo?.nomeCompleto}</Text>
                     <Text style={styles.usuarioEmail}>{userInfo?.email}</Text>
 
