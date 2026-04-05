@@ -3,16 +3,17 @@ import { ScrollView, StyleSheet, } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from "react-native-paper";
 import { CabecalhoHome } from '@/components/home/cabecalho';
+import { BannerHome } from '@/components/home/bannerHome';
 
 export default function HomeScreen() {
     const theme = useTheme();
 
     return (
         <SafeAreaView style={styles.container}>
-            <CabecalhoHome/>
+            <CabecalhoHome />
 
             <ScrollView style={{ ...styles.scroll, backgroundColor: theme.colors.background }} showsVerticalScrollIndicator={false}>
-
+                <BannerHome />
             </ScrollView>
         </SafeAreaView>
     )
