@@ -61,33 +61,33 @@ export const UserProvider = ({ children }: any) => {
         }
     }
 
-    /* async function removerFoto(id) {
-         try {
-             await axiosClient.patch(`/usuario/update/removerfoto/${id}`);
-  
-             await buscarUsuario();
-  
-             return { sucesso: true };
-         } catch (err) {
-             return {
-                 sucesso: false,
-                 mensagem: err.response?.data?.message || err.message,
-             };
-         }
-     }*/
-  
-     async function removerConta() {
-         try {
-             await api.patch('/usuario/delete/conta');
-  
-             return { sucesso: true };
-         } catch (err: any) {
-             return {
-                 sucesso: false,
-                 mensagem: err.response?.data?.message || err.message,
-             };
-         }
-     }
+    async function removerFoto(id: number) {
+        try {
+            api.patch(`/usuario/update/removerfoto/${id}`);
+
+            await buscarUsuario();
+
+            return { sucesso: true };
+        } catch (err: any) {
+            return {
+                sucesso: false,
+                mensagem: err.response?.data?.message || err.message,
+            };
+        }
+    }
+
+    async function removerConta() {
+        try {
+            await api.patch('/usuario/delete/conta');
+
+            return { sucesso: true };
+        } catch (err: any) {
+            return {
+                sucesso: false,
+                mensagem: err.response?.data?.message || err.message,
+            };
+        }
+    }
 
     useEffect(() => {
         buscarUsuario();
@@ -100,7 +100,7 @@ export const UserProvider = ({ children }: any) => {
                 loadingUser,
                 criarUsuario,
                 editarUsuario,
-                // removerFoto,
+                removerFoto,
                 removerConta,
                 buscarUsuario,
                 setUserInfo,
