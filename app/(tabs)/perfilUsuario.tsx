@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Alert, Image, } from "react-native";
+import { View, ScrollView, TouchableOpacity, StyleSheet, Alert, Image, } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Dialog, useTheme } from "react-native-paper";
+import { Dialog, useTheme, Text } from "react-native-paper";
 import { router } from "expo-router";
 import { AuthContext } from "@/context/AuthProvider";
 import { UserContext } from "@/context/UserProvider";
@@ -22,7 +22,7 @@ export default function PerfilUsuario() {
             router.navigate("/entrar");
         }
     }, [user]);
-    
+
     useEffect(() => {
         buscarUsuario();
     }, []);
@@ -84,8 +84,8 @@ export default function PerfilUsuario() {
                 <Text style={styles.headerTitulo}>Meu perfil</Text>
             </View>
 
-            <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollConteudo} >
-                <View style={{ ...styles.dadosUsuario }}>
+            <ScrollView style={{ ...styles.scroll, backgroundColor: theme.colors.surface }} showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollConteudo} >
+                <View style={{ ...styles.dadosUsuario, backgroundColor: theme.colors.surface }}>
                     <Image style={styles.imagemUsuario} source={{ uri: userInfo?.imgUser || imagemUsuario }} />
                     <Text style={styles.usuarioNome}>{userInfo?.nomeCompleto}</Text>
                     <Text style={styles.usuarioEmail}>{userInfo?.email}</Text>
@@ -96,7 +96,7 @@ export default function PerfilUsuario() {
                 </View>
 
                 {/* minha conta */}
-                <View style={styles.secao}>
+                <View style={{ ...styles.secao, backgroundColor: theme.colors.surface }} >
                     <Text style={styles.secaoLabel}>Meus dados</Text>
                     <View style={styles.infoCard}>
                         <View style={styles.infoLinha}>
@@ -114,7 +114,7 @@ export default function PerfilUsuario() {
                 </View>
 
                 {/* pedidos*/}
-                <View style={styles.secao}>
+                <View style={{...styles.secao, backgroundColor: theme.colors.surface }} >
                     <Text style={styles.secaoLabel}>Compras</Text>
                     <View style={styles.menuCard}>
                         <TouchableOpacity style={styles.menuItem} onPress={() => router.navigate("/(tabs)/pedidos")}>
@@ -282,7 +282,6 @@ const styles = StyleSheet.create({
     secaoLabel: {
         fontSize: 11,
         fontWeight: "700",
-        color: "#aaa",
         letterSpacing: 0.8,
         textTransform: "uppercase",
         marginBottom: 8,
@@ -290,7 +289,6 @@ const styles = StyleSheet.create({
     },
 
     infoCard: {
-        backgroundColor: "#fff",
         borderRadius: 14,
         borderWidth: 1,
         borderColor: "#eee",
@@ -311,12 +309,10 @@ const styles = StyleSheet.create({
     },
     infoLabel: {
         fontSize: 12,
-        color: "#aaa",
         width: 70,
     },
     infoValor: {
         fontSize: 13,
-        color: "#333",
         fontWeight: "500",
         flex: 1,
     },
@@ -327,7 +323,6 @@ const styles = StyleSheet.create({
     },
 
     menuCard: {
-        backgroundColor: tema.colors.white,
         borderRadius: 14,
         borderWidth: 1,
         borderColor: "#eee",
@@ -359,11 +354,9 @@ const styles = StyleSheet.create({
     menuItemTitulo: {
         fontSize: 14,
         fontWeight: "500",
-        color: "#1a1a1a",
     },
     menuItemSubtitulo: {
         fontSize: 12,
-        color: "#aaa",
     },
     seta: {
         fontSize: 30,
