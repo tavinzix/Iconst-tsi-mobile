@@ -5,6 +5,8 @@ import { useTheme } from "react-native-paper";
 import { CabecalhoHome } from '@/components/home/cabecalho';
 import { BannerHome } from '@/components/home/bannerHome';
 import { CategoriasHome } from '@/components/home/categoriaHome';
+import { OfertasHome } from '@/components/home/ofertasHome';
+import { ProdutosHome } from '@/components/home/produtosHome';
 
 export default function HomeScreen() {
     const theme = useTheme();
@@ -16,6 +18,8 @@ export default function HomeScreen() {
             <ScrollView style={{ ...styles.scroll, backgroundColor: theme.colors.background }} showsVerticalScrollIndicator={false}>
                 <BannerHome />
                 <CategoriasHome />
+                <OfertasHome />
+                <ProdutosHome />
             </ScrollView>
         </SafeAreaView>
     )

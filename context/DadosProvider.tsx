@@ -6,6 +6,7 @@ export const DadosContext = createContext({});
 export const DadosProvider = ({ children }: any) => {
     const [listaBanner, setListaBanner] = useState([]);
     const [listaCategorias, setListaCategorias] = useState([]);
+    const [listaProdutos, setListaProdutos] = useState([]);
 
     async function buscaBannerAtivo() {
         try {
@@ -25,8 +26,15 @@ export const DadosProvider = ({ children }: any) => {
         }
     }
 
-
-
+    async function buscaProdutos() {
+        try {
+            const { data } = await api.get("/vendedor/info/produtoAtivo");
+            setListaProdutos(data || []);
+            return data;
+        } catch (err) {
+            console.error("Erro ao buscar produtos:", err);
+        }
+    }
 
     return (
         <DadosContext.Provider
@@ -35,6 +43,8 @@ export const DadosProvider = ({ children }: any) => {
                 buscaBannerAtivo,
                 listaCategorias,
                 buscaCategoriaAtiva,
+                listaProdutos,
+                buscaProdutos
 
             }}>
             {children}
