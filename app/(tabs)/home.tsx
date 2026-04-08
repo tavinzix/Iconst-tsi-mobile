@@ -7,6 +7,7 @@ import { BannerHome } from '@/components/home/bannerHome';
 import { CategoriasHome } from '@/components/home/categoriaHome';
 import { OfertasHome } from '@/components/home/ofertasHome';
 import { ProdutosHome } from '@/components/home/produtosHome';
+import tema from '@/utils/tema';
 
 export default function HomeScreen() {
     const theme = useTheme();
@@ -28,7 +29,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FF6B00',
+        backgroundColor: tema.colors.primary,
     },
 
     scroll: {

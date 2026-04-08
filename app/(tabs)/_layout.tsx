@@ -9,7 +9,7 @@ export default function TabLayout() {
     return (
         <Tabs screenOptions={{
             headerShown: false,
-            tabBarActiveTintColor: '#FF6B00',
+            tabBarActiveTintColor: tema.colors.primary,
             tabBarInactiveTintColor: '#aaa',
             tabBarLabelStyle: {
                 fontSize: 11,

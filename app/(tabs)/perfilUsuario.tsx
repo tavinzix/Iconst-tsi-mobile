@@ -169,7 +169,7 @@ export default function PerfilUsuario() {
                                 <Text style={styles.menuIconeEmoji}>🚪</Text>
                             </View>
                             <View style={styles.menuTextoContainer}>
-                                <Text style={{ ...styles.menuItemTitulo, color: "#FF6B00" }}>Sair da conta</Text>
+                                <Text style={{ ...styles.menuItemTitulo, color: tema.colors.primary }}>Sair da conta</Text>
                             </View>
                             <Text style={styles.seta}>{'\u2192'}</Text>
                         </TouchableOpacity>
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
         width: 6,
         height: 6,
         borderRadius: 3,
-        backgroundColor: "#FF6B00",
+        backgroundColor: tema.colors.primary,
     },
     infoLabel: {
         fontSize: 12,

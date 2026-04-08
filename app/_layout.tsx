@@ -6,6 +6,8 @@ import "react-native-reanimated";
 import tema from '@/utils/tema';
 import { StatusBar } from 'expo-status-bar';
 import { UserProvider } from '@/context/UserProvider';
+import { CarrinhoProvider } from '@/context/CarrinhoProvider';
+import { DadosProvider } from '@/context/DadosProvider';
 
 const themeLight = {
     ...MD3LightTheme,
@@ -36,19 +38,24 @@ export default function RootLayout() {
     return (
         <PaperProvider theme={colorScheme === "dark" ? themeDark : themeLight}>
             <AuthProvider>
-                <UserProvider>
-                    <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+                <CarrinhoProvider>
+                    <DadosProvider>
 
-                    <Stack initialRouteName='index'
-                        screenOptions={{
-                            headerShown: false,
-                        }}>
-                        <Stack.Screen name="(tabs)" />
-                        <Stack.Screen name="entrar" />
-                        <Stack.Screen name="cadastrarUsuario" />
-                        <Stack.Screen name="editarPerfilUsuario" />
-                    </Stack>
-                </UserProvider>
+                        <UserProvider>
+                            <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+
+                            <Stack initialRouteName='index'
+                                screenOptions={{
+                                    headerShown: false,
+                                }}>
+                                <Stack.Screen name="(tabs)" />
+                                <Stack.Screen name="entrar" />
+                                <Stack.Screen name="cadastrarUsuario" />
+                                <Stack.Screen name="editarPerfilUsuario" />
+                            </Stack>
+                        </UserProvider>
+                    </DadosProvider>
+                </CarrinhoProvider>
             </AuthProvider>
         </PaperProvider>
     );

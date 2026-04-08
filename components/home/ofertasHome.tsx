@@ -1,3 +1,4 @@
+import tema from '@/utils/tema';
 import React from 'react'
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image, } from 'react-native'
 
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
     },
     seeAll: {
         fontSize: 13,
-        color: '#FF6B00',
+        color: tema.colors.primary,
         fontWeight: '600',
         marginTop: 2,
     },
@@ -222,7 +223,7 @@ const styles = StyleSheet.create({
     },
     price: {
         fontSize: 15,
-        color: '#FF6B00',
+        color: tema.colors.primary,
         fontWeight: '700',
         marginBottom: 2,
     },
@@ -233,7 +234,7 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     button: {
-        backgroundColor: '#FF6B00',
+        backgroundColor: tema.colors.primary,
         borderRadius: 7,
         paddingVertical: 7,
         alignItems: 'center',

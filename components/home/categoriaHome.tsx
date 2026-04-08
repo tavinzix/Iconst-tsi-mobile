@@ -1,4 +1,5 @@
 import { DadosContext } from '@/context/DadosProvider';
+import tema from '@/utils/tema';
 import { router } from 'expo-router';
 import React, { useContext, useEffect, } from 'react'
 import { View, ScrollView, TouchableOpacity, StyleSheet, Image, } from 'react-native'
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     },
     verTodas: {
         fontSize: 16,
-        color: '#FF6B00',
+        color: tema.colors.primary,
         fontWeight: '800',
     },
     scroll: {
