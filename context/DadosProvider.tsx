@@ -5,6 +5,7 @@ export const DadosContext = createContext({});
 
 export const DadosProvider = ({ children }: any) => {
     const [listaBanner, setListaBanner] = useState([]);
+    const [listaCategorias, setListaCategorias] = useState([]);
 
     async function buscaBannerAtivo() {
         try {
@@ -15,11 +16,25 @@ export const DadosProvider = ({ children }: any) => {
         }
     }
 
+    async function buscaCategoriaAtiva() {
+        try {
+            const { data } = await api.get("/administrador/info/categoriaAtiva");
+            setListaCategorias(data.categoria || []);
+        } catch (err) {
+            console.error("Erro ao buscar categorias:", err);
+        }
+    }
+
+
+
+
     return (
         <DadosContext.Provider
             value={{
                 listaBanner,
                 buscaBannerAtivo,
+                listaCategorias,
+                buscaCategoriaAtiva,
 
             }}>
             {children}
