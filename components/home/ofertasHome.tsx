@@ -64,57 +64,56 @@ const ofertasMock = [
         badge: "OFERTA"
     }
 ];
-console.log("ofertasMock" + ofertasMock)
+console.log("LISTA DE OFERTAS" + ofertasMock)
 export function OfertasHome() {
     return (
-        <View style={styles.section}>
-            <View style={styles.sectionHeader}>
+        <View style={styles.container}>
+            <View style={styles.header}>
                 <View>
-                    <Text style={styles.sectionTitle}>Ofertas Relâmpago</Text>
-                    <Text style={styles.sectionSub}>Descontos por tempo limitado!</Text>
+                    <Text style={styles.headerTitulo}>Ofertas Relâmpago</Text>
                 </View>
                 <TouchableOpacity
-                // onPress={onSeeAll}
+                    onPress={() => alert('abrir todas as ofertas')}
                 >
-                    <Text style={styles.seeAll}>Ver todas →</Text>
+                    <Text style={styles.verTodas}>Ver todas →</Text>
                 </TouchableOpacity>
             </View>
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-                {ofertasMock.map((product) => (
-                    <TouchableOpacity key={product.id} style={styles.card} activeOpacity={0.8}
-                    // onPress={() => onPress(product)}
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scroll}>
+                {ofertasMock.map((produto) => (
+                    <TouchableOpacity key={produto.id} style={styles.card} activeOpacity={0.8}
+                        onPress={() => alert(`carregar pagina com o item ${produto.nome}`)}
                     >
                      
-                        <View style={styles.imageContainer}>
-                            <Image source={{ uri: product.imagem }} style={styles.image} />
+                        <View style={styles.imagemContainer}>
+                            <Image source={{ uri: produto.imagem }} style={styles.imagem} />
 
-                            {product.desconto && (
-                                <View style={styles.discount}>
-                                    <Text style={styles.discountText}>-{product.desconto}%</Text>
+                            {produto.desconto && (
+                                <View style={styles.desconto}>
+                                    <Text style={styles.descontoTexto}>-{produto.desconto}%</Text>
                                 </View>
                             )}
                         </View>
 
-                        <View style={styles.info}>
-                            <Text style={styles.name} numberOfLines={2}>{product.nome}</Text>
+                        <View style={styles.informacoes}>
+                            <Text style={styles.nome} numberOfLines={2}>{produto.nome}</Text>
 
-                            {product.precoOriginal && (
-                                <Text style={styles.originalPrice}> De: R$ {product.precoOriginal.toFixed(2).replace('.', ',')} </Text>
+                            {produto.precoOriginal && (
+                                <Text style={styles.precoOriginal}> De: R$ {produto.precoOriginal.toFixed(2).replace('.', ',')} </Text>
                             )}
 
-                            <Text style={styles.price}> R$ {product.precoOferta.toFixed(2).replace('.', ',')} </Text>
+                            <Text style={styles.precoOferta}> R$ {produto.precoOferta.toFixed(2).replace('.', ',')} </Text>
 
-                            {product.desconto && (
-                                <Text style={styles.savings}>
-                                    Economize R$ {parseFloat(product.precoOriginal.toFixed(2).replace('.', ',')) - parseFloat(product.precoOferta.toFixed(2).replace('.', ',')) }
+                            {produto.desconto && (
+                                <Text style={styles.economize}>
+                                    Economize R$ {parseFloat(produto.precoOriginal.toFixed(2).replace('.', ',')) - parseFloat(produto.precoOferta.toFixed(2).replace('.', ',')) }
                                 </Text>
                             )}
 
-                            <TouchableOpacity style={styles.button}
+                            <TouchableOpacity style={styles.botao}
                             // onPress={() => onPress(product)}
                             >
-                                <Text style={styles.buttonText}>Ver Oferta</Text>
+                                <Text style={styles.botaoTexto}>Ver Oferta</Text>
                             </TouchableOpacity>
                         </View>
                     </TouchableOpacity>
@@ -125,33 +124,28 @@ export function OfertasHome() {
 }
 
 const styles = StyleSheet.create({
-    section: {
-        marginTop: 20,
+    container: {
+        marginTop: 50,
     },
-    sectionHeader: {
+    header: {
         flexDirection: 'row',
         alignItems: 'flex-start',
         justifyContent: 'space-between',
         paddingHorizontal: 16,
         marginBottom: 12,
     },
-    sectionTitle: {
-        fontSize: 16,
+    headerTitulo: {
+        fontSize: 20,
         fontWeight: '700',
         color: '#1a1a1a',
     },
-    sectionSub: {
-        fontSize: 12,
-        color: '#888',
-        marginTop: 2,
-    },
-    seeAll: {
-        fontSize: 13,
+    verTodas: {
+        fontSize: 16,
         color: tema.colors.primary,
         fontWeight: '600',
         marginTop: 2,
     },
-    scrollContent: {
+    scroll: {
         paddingHorizontal: 16,
         gap: 10,
     },
@@ -163,34 +157,18 @@ const styles = StyleSheet.create({
         borderColor: '#eee',
         overflow: 'hidden',
     },
-    imageContainer: {
+    imagemContainer: {
         height: 104,
         backgroundColor: '#f8f8f8',
         alignItems: 'center',
         justifyContent: 'center',
         position: 'relative',
     },
-    image: {
+    imagem: {
         width: 100,
         height: 100
     },
-    emoji: {
-        fontSize: 48,
-    },
-    badge: {
-        position: 'absolute',
-        top: 6,
-        left: 6,
-        paddingHorizontal: 6,
-        paddingVertical: 2,
-        borderRadius: 4,
-    },
-    badgeText: {
-        color: '#fff',
-        fontSize: 9,
-        fontWeight: '700',
-    },
-    discount: {
+    desconto: {
         position: 'absolute',
         top: 6,
         right: 6,
@@ -199,15 +177,15 @@ const styles = StyleSheet.create({
         paddingVertical: 2,
         borderRadius: 4,
     },
-    discountText: {
+    descontoTexto: {
         color: '#fff',
         fontSize: 9,
         fontWeight: '700',
     },
-    info: {
+    informacoes: {
         padding: 10,
     },
-    name: {
+    nome: {
         fontSize: 12,
         color: '#333',
         fontWeight: '500',
@@ -215,31 +193,31 @@ const styles = StyleSheet.create({
         marginBottom: 4,
         minHeight: 32,
     },
-    originalPrice: {
+    precoOriginal: {
         fontSize: 11,
         color: '#aaa',
         textDecorationLine: 'line-through',
         marginBottom: 2,
     },
-    price: {
+    precoOferta: {
         fontSize: 15,
         color: tema.colors.primary,
         fontWeight: '700',
         marginBottom: 2,
     },
-    savings: {
+    economize: {
         fontSize: 11,
         color: '#2e7d32',
         fontWeight: '500',
         marginBottom: 8,
     },
-    button: {
+    botao: {
         backgroundColor: tema.colors.primary,
         borderRadius: 7,
         paddingVertical: 7,
         alignItems: 'center',
     },
-    buttonText: {
+    botaoTexto: {
         color: '#fff',
         fontSize: 12,
         fontWeight: '600',
