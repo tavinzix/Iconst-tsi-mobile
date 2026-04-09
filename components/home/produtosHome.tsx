@@ -12,6 +12,8 @@ export function ProdutosHome() {
         buscaProdutos()
     }, [])
 
+    console.log("LISTA DE PRODUTOS" + listaProdutos)
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -21,7 +23,7 @@ export function ProdutosHome() {
             <View style={styles.grid}>
                 {listaProdutos.map((produto: any) => (
                     <TouchableOpacity key={produto.id} style={styles.card} activeOpacity={0.8}
-                    // onPress={() => onPress(product)}
+                        onPress={() => alert(`abrir pagina com o produto ${produto.nome}`)}
                     >
                         <View style={styles.imagemContainer}>
                             <Image source={{ uri: getPrimeiraImagem(produto) }} style={styles.imagem} />
@@ -32,10 +34,7 @@ export function ProdutosHome() {
                             <Text style={styles.preco}>R$ {produto.vendedorProduto.preco}</Text>
                             <TouchableOpacity
                                 style={styles.botaoAdicionar}
-                                onPress={(e) => {
-                                    e.stopPropagation()
-                                    // onAddToCart(product)
-                                }}
+                                onPress={() => alert(`adicionar produto ao carrinho ${produto.nome}`)}
                             >
 
                                 <View>
@@ -51,7 +50,7 @@ export function ProdutosHome() {
             </View>
 
             <TouchableOpacity style={styles.verTodosProdutos}
-            // onPress={onSeeAll}
+                onPress={() => alert('abrir todos os produtos')}
             >
                 <Text style={styles.verTodosProdutosTexto}>Ver Todos os Produtos {'\u2192'}</Text>
             </TouchableOpacity>
@@ -131,7 +130,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingVertical: 14,
         alignItems: 'center',
-        marginBottom:10
+        marginBottom: 10
     },
     verTodosProdutosTexto: {
         color: '#fff',

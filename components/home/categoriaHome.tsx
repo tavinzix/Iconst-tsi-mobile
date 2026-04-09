@@ -12,6 +12,8 @@ export function CategoriasHome() {
         buscaCategoriaAtiva();
     }, [])
 
+    console.log("LISTA DE CATEGORIA" + listaCategorias)
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>

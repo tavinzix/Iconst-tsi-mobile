@@ -18,6 +18,8 @@ export function BannerHome() {
         buscaBannerAtivo();
     }, [])
 
+    console.log("LISTA DE BANNER" + listaBanner)
+
     useEffect(() => {
         if (listaBanner.length === 0 || scrollManual) return;
 
