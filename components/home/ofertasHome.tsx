@@ -1,6 +1,7 @@
 import tema from '@/utils/tema';
 import React from 'react'
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image, } from 'react-native'
+import { View, ScrollView, TouchableOpacity, StyleSheet, Image, } from 'react-native'
+import { Text } from "react-native-paper";
 
 const ofertasMock = [
     {
@@ -137,7 +138,6 @@ const styles = StyleSheet.create({
     headerTitulo: {
         fontSize: 20,
         fontWeight: '700',
-        color: '#1a1a1a',
     },
     verTodas: {
         fontSize: 16,

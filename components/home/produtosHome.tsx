@@ -1,6 +1,7 @@
 import { DadosContext } from '@/context/DadosProvider';
 import React, { useContext, useEffect } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, Image, } from 'react-native'
+import { View, TouchableOpacity, StyleSheet, Image, } from 'react-native'
+import { Text } from "react-native-paper";
 import { getPrimeiraImagem } from "../../utils/primeira-imagem"
 import { Icon } from 'react-native-paper';
 import tema from '@/utils/tema';
@@ -60,16 +61,15 @@ export function ProdutosHome() {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 20,
+        marginTop: 50,
         paddingHorizontal: 16,
     },
     header: {
         marginBottom: 12,
     },
     headerTitulo: {
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: '700',
-        color: '#1a1a1a',
     },
     grid: {
         flexDirection: 'row',

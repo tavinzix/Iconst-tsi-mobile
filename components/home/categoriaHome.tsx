@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     titulo: {
         fontSize: 20,
         fontWeight: '700',
-        color: '#1a1a1a',
     },
     verTodas: {
         fontSize: 16,
@@ -80,7 +79,6 @@ const styles = StyleSheet.create({
     },
     nome: {
         fontSize: 11,
-        color: '#555',
         textAlign: 'center',
         lineHeight: 14,
     },
