@@ -119,6 +119,10 @@ export default function Entrar() {
                         Esqueceu sua senha?
                     </Text>
 
+                    <Text variant="labelMedium" onPress={() => router.push("/abrirVerificacaoEmail")} style={{ ...styles.textEsqueceuSenha }}>
+                        Já está cadastrado? Verificar email
+                    </Text>
+
                     <Button style={styles.button} mode="contained" onPress={handleSubmit(entrar)} loading={logando} disabled={logando} >
                         {!logando ? "Entrar" : "Entrando"}
                     </Button>

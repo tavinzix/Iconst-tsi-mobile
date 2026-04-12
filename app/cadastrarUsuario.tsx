@@ -74,10 +74,14 @@ export default function CadastrarUsuario() {
             const data = await criarUsuario(payload);
             console.log(data)
             if (data.sucesso) {
-                setMensagemDialog(data.mensagem);
-                setDialogVisivel(true);
                 setLoading(false);
-                router.replace("/entrar");
+                router.replace({
+                    pathname: "/verificarEmail",
+                    params: {
+                        email: formData.email,
+                        cpf: formData.cpf
+                    }
+                });
             } else {
                 setMensagemDialog(data.mensagem);
                 setDialogVisivel(true);

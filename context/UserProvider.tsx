@@ -89,6 +89,37 @@ export const UserProvider = ({ children }: any) => {
         }
     }
 
+    async function enviarCodigoVerificacao(email: string, cpf: string) {
+        try {
+            const response = await api.post("/enviarCodigoVerificacao/", { email, cpf });
+            return {
+                sucesso: true,
+                email: response.data.email,
+                mensagem: response.data.message
+            };
+        } catch (err: any) {
+            return {
+                sucesso: false,
+                mensagem: err.response?.data?.message || "Erro ao enviar código"
+            };
+        }
+    }
+
+    async function verificarCodigoEmail(cpf: string, codigo: string) {
+        try {
+            const response = await api.post("/verificarCodigoEmail/", { cpf, codigo });
+            return {
+                sucesso: true,
+                mensagem: response.data.message
+            };
+        } catch (err: any) {
+            return {
+                sucesso: false,
+                mensagem: err.response?.data?.message || "Erro ao verificar código"
+            };
+        }
+    }
+
     useEffect(() => {
         buscarUsuario();
     }, [user]);
@@ -104,6 +135,8 @@ export const UserProvider = ({ children }: any) => {
                 removerConta,
                 buscarUsuario,
                 setUserInfo,
+                enviarCodigoVerificacao,
+                verificarCodigoEmail,
             }}>
             {children}
         </UserContext.Provider>
