@@ -1,4 +1,4 @@
-const formatarCPF = (valor) => {
+export const formatarCPF = (valor) => {
     const numeros = valor.replace(/\D/g, '').slice(0, 11);
     const formatado = numeros
         .replace(/(\d{3})(\d)/, '$1.$2')
@@ -8,7 +8,7 @@ const formatarCPF = (valor) => {
     return { formatado, numeros };
 };
 
-const formatarTelefone = (valor) => {
+export const formatarTelefone = (valor) => {
     const numeros = valor.replace(/\D/g, '').slice(0, 11);
     let formatado = numeros;
 
@@ -25,7 +25,7 @@ const formatarTelefone = (valor) => {
     return { formatado, numeros };
 };
 
-const formatarData = (valor) => {
+export const formatarData = (valor) => {
     if (!valor) return { formatado: '', numeros: '' };
 
     if (valor.includes('T')) {
@@ -43,13 +43,13 @@ const formatarData = (valor) => {
     };
 };
 
-const formatarDataPerfilVendedor = (data) => {
+export const formatarDataPerfilVendedor = (data) => {
     if (!data) return 'N/A';
     const date = new Date(data);
     return date.toLocaleDateString('pt-BR', { year: 'numeric', month: 'long' });
 };
 
-const formatarNumeroCartao = (valor) => {
+export const formatarNumeroCartao = (valor) => {
     const numeros = valor.replace(/\D/g, '').slice(0, 16);
     const formatado = numeros.replace(/(\d{4})/g, '$1 ').trim();
 
@@ -59,7 +59,7 @@ const formatarNumeroCartao = (valor) => {
     };
 };
 
-const formatarValidade = (valor) => {
+export const formatarValidade = (valor) => {
     let numeros = valor.replace(/\D/g, '').slice(0, 4);
     const formatado = numeros.length >= 2
         ? numeros.slice(0, 2) + '/' + numeros.slice(2)
@@ -71,7 +71,7 @@ const formatarValidade = (valor) => {
     };
 };
 
-const formatarCVV = (valor) => {
+export const formatarCVV = (valor) => {
     const numeros = valor.replace(/\D/g, '').slice(0, 3);
 
     return {
@@ -80,7 +80,7 @@ const formatarCVV = (valor) => {
     };
 };
 
-const formatarCEP = (valor) => {
+export const formatarCEP = (valor) => {
     const numeros = valor.replace(/\D/g, '').slice(0, 8);
 
     const formatado = numeros.replace(
@@ -94,7 +94,7 @@ const formatarCEP = (valor) => {
     };
 };
 
-const formatarCNPJ = (valor) => {
+export const formatarCNPJ = (valor) => {
     const numeros = valor.replace(/\D/g, '').slice(0, 14);
     const formatado = numeros
         .replace(/(\d{2})(\d)/, '$1.$2')
@@ -108,7 +108,7 @@ const formatarCNPJ = (valor) => {
     };
 };
 
-const formatarURL = (valor) => {
+export const formatarURL = (valor) => {
     if (!valor) return '';
 
     const semAcentos = valor.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // Remove acentos
@@ -126,4 +126,16 @@ const formatarURL = (valor) => {
     return formatado;
 };
 
-export { formatarCPF, formatarTelefone, formatarData, formatarDataPerfilVendedor, formatarNumeroCartao, formatarValidade, formatarCVV, formatarCEP, formatarCNPJ, formatarURL };
+export const formatarTempo = (segundos) => {
+    const minutos = Math.floor(segundos / 60);
+    const segs = segundos % 60;
+    return `${minutos}:${segs.toString().padStart(2, '0')}`;
+};
+
+export const converterData = (ddmmaaaa) => {
+    if (!ddmmaaaa || ddmmaaaa.length !== 8) return '';
+    const dd = ddmmaaaa.substring(0, 2);
+    const mm = ddmmaaaa.substring(2, 4);
+    const aaaa = ddmmaaaa.substring(4, 8);
+    return `${aaaa}-${mm}-${dd}`;
+};

@@ -115,7 +115,7 @@ export default function Entrar() {
                         </Text>
                     )}
 
-                    <Text variant="labelMedium" onPress={() => router.push("/(tabs)/home")} style={{ ...styles.textEsqueceuSenha }}>
+                    <Text variant="labelMedium" onPress={() => router.push("/recuperarSenha")} style={{ ...styles.textEsqueceuSenha }}>
                         Esqueceu sua senha?
                     </Text>
 
