@@ -24,7 +24,7 @@ export default function AlterarSenha() {
 
     const handleSubmit = async () => {
         if (!validacao.valida) {
-            setMensagemDialog('A senha não atende aos requisitos mínimos de segurança');
+            setMensagemDialog('A senha não cumpre os requisitos');
             setTipoDialog('erro');
             setDialogVisivel(true);
             return;
@@ -119,9 +119,8 @@ export default function AlterarSenha() {
                         </Text>
                     )}
 
-
                     <RequisitosSenha
-                        requisitos={validacao.requisitos as any}
+                        requisitos={validacao.requisitos}
                     />
 
                     <Button

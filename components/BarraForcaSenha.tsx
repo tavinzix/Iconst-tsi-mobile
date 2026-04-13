@@ -1,12 +1,7 @@
 import { View, StyleSheet } from 'react-native';
 import { ProgressBar, Text, useTheme } from 'react-native-paper';
 
-interface BarraForcaSenhaProps {
-    senha: string;
-    forca: 'fraca' | 'media' | 'forte';
-}
-
-export default function BarraForcaSenha({ senha, forca }: BarraForcaSenhaProps) {
+export default function BarraForcaSenha({ senha, forca }: { senha: string; forca: 'fraca' | 'media' | 'forte' }) {
     const theme = useTheme();
 
     if (!senha) return null;

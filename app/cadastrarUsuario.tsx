@@ -8,6 +8,9 @@ import { useContext, useState } from "react";
 import { router } from "expo-router";
 import { UserContext } from "@/context/UserProvider";
 import { formatarCPF, formatarTelefone, formatarData } from '@/utils/formatar';
+import { validarSenha } from '@/utils/validarSenha';
+import BarraForcaSenha from '@/components/BarraForcaSenha';
+import RequisitosSenha from '@/components/RequisitosSenha';
 
 const requiredMessage = "Campo obrigatório";
 
@@ -17,11 +20,7 @@ const schema = yup.object().shape({
     cpf: yup.string().required(requiredMessage).matches(/^\d{11}$/, "CPF inválido"),
     dtNasc: yup.string().required(requiredMessage),
     telefone: yup.string().required(requiredMessage),
-    senha: yup.string().required(requiredMessage)
-        .matches(
-            /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/,
-            "A senha deve conter ao menos uma letra maiúscula, uma letra minúscula, um númeral, um caractere especial e um total de 8 caracteres"
-        ),
+    senha: yup.string().required(requiredMessage),
     confirmSenha: yup.string().required(requiredMessage).oneOf([yup.ref("senha")], "As senhas não coincidem"),
 }).required();
 
@@ -32,11 +31,13 @@ export default function CadastrarUsuario() {
     const [cpfFormatado, setCpfFormatado] = useState('');
     const [telefoneFormatado, setTelefoneFormatado] = useState('');
     const [dtNascFormatada, setDtNascFormatada] = useState('');
+    const [senhaAtual, setSenhaAtual] = useState('');
 
     const [loading, setLoading] = useState(false);
     const [dialogVisivel, setDialogVisivel] = useState(false);
     const [mensagemDialog, setMensagemDialog] = useState("");
     const [exibirSenha, setExibirSenha] = useState(true);
+    const validacaoSenha = validarSenha(senhaAtual);
 
     const { control, handleSubmit, formState: { errors } } = useForm<any>({
         defaultValues: {
@@ -55,6 +56,13 @@ export default function CadastrarUsuario() {
     async function criarConta(formData: any) {
         setLoading(true);
 
+        if (!validacaoSenha.valida) {
+            setMensagemDialog('A senha não cumpre os requisitos');
+            setDialogVisivel(true);
+            setLoading(false);
+            return;
+        }
+
         const [dia, mes, ano] = [
             formData.dtNasc.slice(0, 2),
             formData.dtNasc.slice(2, 4),
@@ -72,7 +80,6 @@ export default function CadastrarUsuario() {
 
         try {
             const data = await criarUsuario(payload);
-            console.log(data)
             if (data.sucesso) {
                 setLoading(false);
                 router.replace({
@@ -263,7 +270,10 @@ export default function CadastrarUsuario() {
                                         returnKeyType="next"
                                         secureTextEntry={exibirSenha}
                                         onBlur={onBlur}
-                                        onChangeText={onChange}
+                                        onChangeText={(text) => {
+                                            setSenhaAtual(text);
+                                            onChange(text);
+                                        }}
                                         value={value}
                                         left={<TextInput.Icon icon="lock" />}
                                         right={
@@ -299,7 +309,9 @@ export default function CadastrarUsuario() {
                                         returnKeyType="next"
                                         secureTextEntry={exibirSenha}
                                         onBlur={onBlur}
-                                        onChangeText={onChange}
+                                        onChangeText={(text) => {
+                                            onChange(text);
+                                        }}
                                         value={value}
                                         left={<TextInput.Icon icon="lock" />}
                                         right={
@@ -322,13 +334,24 @@ export default function CadastrarUsuario() {
                                 </Text>
                             )}
 
-                            <Button style={{ ...styles.button, backgroundColor: theme.colors.primary }} mode="contained" onPress={handleSubmit(criarConta)} loading={loading} disabled={loading}>
+                            {senhaAtual &&
+                                <BarraForcaSenha
+                                    senha={senhaAtual}
+                                    forca={validacaoSenha.forca as 'fraca' | 'media' | 'forte'}
+                                />}
+                            {senhaAtual &&
+                                <RequisitosSenha
+                                    requisitos={validacaoSenha.requisitos}
+                                />}
+
+                            <Button style={{ ...styles.button, backgroundColor: theme.colors.primary }} mode="contained" onPress={handleSubmit(criarConta)}
+                                loading={loading} disabled={loading || Object.keys(errors).length > 0}>
                                 {!loading ? "Cadastrar" : "Cadastrando"}
                             </Button>
                         </View>
                     </ScrollView>
                 </KeyboardAvoidingView>
-                
+
                 <Dialog visible={dialogVisivel} onDismiss={() => setDialogVisivel(false)}>
                     <Dialog.Icon icon="alert-circle-outline" size={60} />
                     <Dialog.Title style={styles.textDialog}>Erro</Dialog.Title>
@@ -346,7 +369,7 @@ export default function CadastrarUsuario() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding:30
+        padding: 30
     },
     formContainer: {
         width: "100%",
