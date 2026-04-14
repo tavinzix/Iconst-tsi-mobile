@@ -115,12 +115,8 @@ export default function Entrar() {
                         </Text>
                     )}
 
-                    <Text variant="labelMedium" onPress={() => router.push("/recuperarSenha")} style={{ ...styles.textEsqueceuSenha }}>
+                    <Text onPress={() => router.push("/recuperarSenha")} style={{ ...styles.textEsqueceuSenha }}>
                         Esqueceu sua senha?
-                    </Text>
-
-                    <Text variant="labelMedium" onPress={() => router.push("/abrirVerificacaoEmail")} style={{ ...styles.textEsqueceuSenha }}>
-                        Já está cadastrado? Verificar email
                     </Text>
 
                     <Button style={styles.button} mode="contained" onPress={handleSubmit(entrar)} loading={logando} disabled={logando} >
@@ -130,10 +126,19 @@ export default function Entrar() {
                     <Divider />
 
                     <View style={styles.divCadastro}>
-                        <Text variant="labelMedium">Não tem uma conta? </Text>
-                        <Text variant="labelMedium" onPress={() => router.push("/cadastrarUsuario")}
-                         style={{ ...styles.textCadastro }} >
+                        <Text>Não tem uma conta? </Text>
+                        <Text onPress={() => router.push("/cadastrarUsuario")}
+                            style={{ ...styles.textCadastro }} >
                             Cadastre-se.
+                        </Text>
+                    </View>
+
+                    <Divider style={{ marginTop: 20 }} />
+
+                    <View style={styles.divCadastro}>
+                        <Text>Não verificou o cadastro? </Text>
+                        <Text onPress={() => router.push("/abrirVerificacaoEmail")} style={{ ...styles.textCadastro }} >
+                            Verficar email
                         </Text>
                     </View>
                 </ScrollView>
@@ -187,14 +192,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     textCadastro: {
-        fontSize:15,
+        fontSize: 15,
         fontFamily: tema.fonts.primary,
         color: tema.colors.primary_dark
     },
     textEsqueceuSenha: {
         alignSelf: "flex-end",
         marginTop: 20,
-        fontSize:15,
+        fontSize: 15,
         fontFamily: tema.fonts.primary,
         color: tema.colors.primary_dark
     },
