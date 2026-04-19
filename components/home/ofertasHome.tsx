@@ -1,5 +1,5 @@
 import tema from '@/utils/tema';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, ScrollView, TouchableOpacity, StyleSheet, Image, } from 'react-native'
 import { Text } from "react-native-paper";
 
@@ -65,8 +65,16 @@ const ofertasMock = [
         badge: "OFERTA"
     }
 ];
-console.log("LISTA DE OFERTAS" + ofertasMock)
+
+
+
 export function OfertasHome() {
+    useEffect(() => {
+        ofertasMock
+    }, [])
+
+    console.log("LISTA DE OFERTAS" + ofertasMock)
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -85,7 +93,7 @@ export function OfertasHome() {
                     <TouchableOpacity key={produto.id} style={styles.card} activeOpacity={0.8}
                         onPress={() => alert(`carregar pagina com o item ${produto.nome}`)}
                     >
-                     
+
                         <View style={styles.imagemContainer}>
                             <Image source={{ uri: produto.imagem }} style={styles.imagem} />
 
@@ -107,7 +115,7 @@ export function OfertasHome() {
 
                             {produto.desconto && (
                                 <Text style={styles.economize}>
-                                    Economize R$ {parseFloat(produto.precoOriginal.toFixed(2).replace('.', ',')) - parseFloat(produto.precoOferta.toFixed(2).replace('.', ',')) }
+                                    Economize R$ {parseFloat(produto.precoOriginal.toFixed(2).replace('.', ',')) - parseFloat(produto.precoOferta.toFixed(2).replace('.', ','))}
                                 </Text>
                             )}
 
