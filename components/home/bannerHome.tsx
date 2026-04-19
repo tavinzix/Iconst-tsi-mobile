@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { View, ScrollView, TouchableOpacity, StyleSheet, Dimensions, NativeSyntheticEvent, NativeScrollEvent, Image, Linking } from 'react-native'
 import { Text } from "react-native-paper";
 import { LinearGradient } from 'expo-linear-gradient';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -13,6 +13,16 @@ export function BannerHome() {
     const scrollRef = useRef<ScrollView>(null);
     const [bannerAtual, setBannerAtual] = useState(0);
     const [scrollManual, setScrollManual] = useState(false);
+    const [isScreenFocused, setIsScreenFocused] = useState(true);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setIsScreenFocused(true);
+            return () => {
+                setIsScreenFocused(false);
+            };
+        }, [])
+    );
 
     useEffect(() => {
         buscaBannerAtivo();
@@ -21,14 +31,14 @@ export function BannerHome() {
     console.log("LISTA DE BANNER" + listaBanner)
 
     useEffect(() => {
-        if (listaBanner.length === 0 || scrollManual) return;
+        if (listaBanner.length === 0 || scrollManual || !isScreenFocused) return;
 
         const interval = setInterval(() => {
             setBannerAtual((prev) => (prev + 1) % listaBanner.length);
         }, 5000);
 
         return () => clearInterval(interval);
-    }, [listaBanner, scrollManual]);
+    }, [listaBanner, scrollManual, isScreenFocused]);
 
     useEffect(() => {
         if (listaBanner.length === 0) return;
