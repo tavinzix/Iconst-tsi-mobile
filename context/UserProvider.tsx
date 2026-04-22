@@ -47,8 +47,6 @@ export const UserProvider = ({ children }: any) => {
                 headers: { "Content-Type": "multipart/form-data" }
             });
 
-            await buscarUsuario();
-
             return {
                 sucesso: true,
                 imgUser: data.imgUser
@@ -64,9 +62,6 @@ export const UserProvider = ({ children }: any) => {
     async function removerFoto(id: number) {
         try {
             api.patch(`/usuario/update/removerfoto/${id}`);
-
-            await buscarUsuario();
-
             return { sucesso: true };
         } catch (err: any) {
             return {

@@ -1,12 +1,12 @@
 import { AuthContext } from "@/context/AuthProvider";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Image, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, View, Alert, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Controller, useForm } from "react-hook-form";
 import { Button, Dialog, TextInput, useTheme, Text } from "react-native-paper";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { UserContext } from "@/context/UserProvider";
 import { formatarCPF, formatarTelefone, formatarData } from '@/utils/formatar';
 import * as ImagePicker from 'expo-image-picker';
@@ -29,7 +29,7 @@ const schema = yup.object().shape({
 
 export default function EditarPerfilUsuario() {
     const { userInfo, loadingUser, editarUsuario, removerFoto, buscarUsuario } = useContext<any>(UserContext);
-    const { user, imagemUsuario } = useContext<any>(AuthContext)
+    const { user, imagemUsuario, setImagemUsuario } = useContext<any>(AuthContext)
     const theme = useTheme();
 
     const [cpfFormatado, setCpfFormatado] = useState('');
@@ -58,8 +58,49 @@ export default function EditarPerfilUsuario() {
     });
 
     const selecionarImagem = async () => {
+        Alert.alert("Inserir imagem", "Como deseja inserir sua foto?", [
+            {
+                text: "Galeria", style: "default",
+                onPress: async () => {
+                    await imagemGaleria()
+                }
+            },
+            {
+                text: "Camera", style: "default",
+                onPress: async () => {
+                    await imagemCamera()
+                },
+            },
+        ]);
+    };
+
+    const imagemGaleria = async () => {
         try {
             const result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: 'images',
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 0.8,
+            });
+
+            if (!result.canceled && result.assets[0]) {
+                const asset = result.assets[0];
+                setImagemPreview(asset.uri);
+                setImagemSelecionada({
+                    uri: asset.uri,
+                    type: asset.type || 'image',
+                    mimeType: asset.mimeType || 'image/jpeg',
+                });
+            }
+        } catch (error) {
+            alert("Erro ao selecionar imagem");
+            console.error(error);
+        }
+    };
+
+    const imagemCamera = async () => {
+        try {
+            const result = await ImagePicker.launchCameraAsync({
                 mediaTypes: 'images',
                 allowsEditing: true,
                 aspect: [1, 1],
@@ -95,6 +136,7 @@ export default function EditarPerfilUsuario() {
                             if (resultado.sucesso) {
                                 await buscarUsuario();
                                 setImagemPreview(null);
+                                setImagemUsuario(null);
                                 setImagemSelecionada(null);
                                 setMensagemDialog("Imagem removida com sucesso!");
                                 setTipoDialog("sucesso");
@@ -141,7 +183,15 @@ export default function EditarPerfilUsuario() {
         try {
             const data = await editarUsuario(user.id, payload);
             if (data.sucesso) {
-                await buscarUsuario();
+                const usuarioAtualizado = await buscarUsuario();
+                const novaImagem = usuarioAtualizado?.imgUser || data.imgUser;
+
+                if (novaImagem) {
+                    setImagemUsuario(novaImagem)
+                } else if (!imagemSelecionada) {
+                    setImagemUsuario(null)
+                }
+
                 setMensagemDialog("Perfil atualizado com sucesso!");
                 setTipoDialog("sucesso");
                 setDialogVisivel(true);
@@ -167,6 +217,13 @@ export default function EditarPerfilUsuario() {
         }
     }
 
+    useFocusEffect(
+        React.useCallback(() => {
+            setImagemPreview(null);
+            setImagemSelecionada(null);
+        }, [])
+    );
+
     return (
         <SafeAreaView style={{ ...styles.container }} edges={["top"]}>
             <View style={{ ...styles.header, backgroundColor: theme.colors.primary }}>
@@ -174,14 +231,11 @@ export default function EditarPerfilUsuario() {
             </View>
 
             <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-                <ScrollView style={{ ...styles.scrollContent }}
-                    keyboardShouldPersistTaps="handled"
-                    showsHorizontalScrollIndicator={false}
-                    showsVerticalScrollIndicator={false}>
+                <ScrollView style={{ ...styles.scrollContent }} keyboardShouldPersistTaps="handled" showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
 
-                    <View style={{...styles.imagemContainer, backgroundColor: theme.colors.surface}}>
+                    <View style={{ ...styles.imagemContainer, backgroundColor: theme.colors.surface }}>
                         <View style={styles.imagemWrapper}>
-                            <Image style={styles.imagemUsuario} source={{ uri: imagemPreview || imagemUsuario }} />
+                            <Image style={styles.imagemUsuario} source={{ uri: imagemPreview || userInfo?.imgUser || imagemUsuario }} />
                             <View style={styles.botoesImagem}>
                                 <TouchableOpacity style={{ ...styles.botaoImagemEditar, backgroundColor: theme.colors.primary }} onPress={selecionarImagem}>
                                     <Text style={styles.emojiBtn}>📷</Text>
@@ -196,7 +250,7 @@ export default function EditarPerfilUsuario() {
                         </View>
                     </View>
 
-                    <View style={{...styles.formContainer, backgroundColor: theme.colors.surface}}>
+                    <View style={{ ...styles.formContainer, backgroundColor: theme.colors.surface }}>
                         <Controller name="nome" control={control} render={({ field: { onChange, onBlur, value } }) => (
                             <TextInput
                                 style={styles.textinput}
