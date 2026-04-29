@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react'
 import api from '@/services/api'
+import { AuthContext } from './AuthProvider'
 
 interface CarrinhoItem {
     id: number
@@ -46,6 +47,7 @@ interface CarrinhoContextType {
 export const CarrinhoContext = createContext<CarrinhoContextType | null>(null)
 
 export const CarrinhoProvider = ({ children }: { children: ReactNode }) => {
+    const { user } = useContext<any>(AuthContext)
     const [listaCarrinho, setListaCarrinho] = useState<CarrinhoItem[]>([])
     const [loading, setLoading] = useState(false)
 
@@ -102,8 +104,12 @@ export const CarrinhoProvider = ({ children }: { children: ReactNode }) => {
     }
 
     useEffect(() => {
-        buscaCarrinho()
-    }, [])
+        if (user) {
+            buscaCarrinho()
+        } else {
+            setListaCarrinho([])
+        }
+    }, [user])
 
     return (
         <CarrinhoContext.Provider
