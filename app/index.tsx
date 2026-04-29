@@ -9,6 +9,10 @@ export default function Preload() {
 
     async function entrar() {
         const dados = await recuperaCredencialnaCache()
+        if (!dados) {
+            router.replace("/entrar");
+            return;
+        }
         const response = await login(dados);
         if (response.sucesso) {
             router.replace("/(tabs)/home");
