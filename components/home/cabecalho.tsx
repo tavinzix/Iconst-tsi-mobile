@@ -29,7 +29,7 @@ export function CabecalhoHome() {
                 <View style={styles.headerDireita}>
                     <Icon source="chat-processing-outline" size={40} />
                     <TouchableOpacity onPress={() => router.push('/(tabs)/perfilUsuario')}>
-                        <Image style={styles.imagemUsuario} source={{ uri: user?.imgUser || imagemUsuario }} />
+                        <Image style={styles.imagemUsuario} source={{ uri: imagemUsuario || user?.imgUser}} />
                     </TouchableOpacity>
                 </View>
             </View>
