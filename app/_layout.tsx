@@ -57,6 +57,8 @@ export default function RootLayout() {
                                             <Stack.Screen name="entrar" />
                                             <Stack.Screen name="cadastrarUsuario" />
                                             <Stack.Screen name="editarPerfilUsuario" />
+                                            <Stack.Screen name="detalhesProduto" />
+                                            <Stack.Screen name="produtosPorCategoria" />
                                         </Stack>
                                     </CheckoutProvider>
                                 </FormaPagamentoProvider>

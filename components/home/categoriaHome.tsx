@@ -25,7 +25,12 @@ export function CategoriasHome() {
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scroll}>
                 {listaCategorias.map((cat: any) => (
-                    <TouchableOpacity key={cat.id} style={styles.item} activeOpacity={0.7} onPress={() => alert(`carregar itens da categoria ${cat.nome}`)}>
+                    <TouchableOpacity key={cat.id} style={styles.item} activeOpacity={0.7} onPress={() => {
+                        router.push({
+                            pathname: '/produtosPorCategoria',
+                            params: { slug: cat.url, nome: cat.nome }
+                        })
+                    }}>
                         <View>
                             <Image source={{ uri: cat.imagem }} style={styles.circulo} />
                         </View>
