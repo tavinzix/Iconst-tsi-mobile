@@ -36,6 +36,15 @@ export const DadosProvider = ({ children }: any) => {
         }
     }
 
+    async function buscarProdutosCategoria(slugUrl: any) {
+        try {
+            const { data } = await api.get(`/vendedor/info/produtoCategoria/${slugUrl}`)
+            return data;
+        } catch (err) {
+            console.error('Erro ao buscar produtos:', err)
+        }
+    }
+
     return (
         <DadosContext.Provider
             value={{
@@ -44,7 +53,8 @@ export const DadosProvider = ({ children }: any) => {
                 listaCategorias,
                 buscaCategoriaAtiva,
                 listaProdutos,
-                buscaProdutos
+                buscaProdutos,
+                buscarProdutosCategoria
 
             }}>
             {children}
